@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+
+set PYPI_DRF_USERNAME "__token__"
+set PYPI_DRF_PASSWORD $env(PYPI_DRF_PASSWORD)
+
+spawn ./interactive_deploy.sh
+
+expect "Enter your username: "
+send "$PYPI_DRF_USERNAME\r"
+
+expect "Enter your password: "
+send "$PYPI_DRF_PASSWORD\r"
+
+expect eof

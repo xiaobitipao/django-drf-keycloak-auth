@@ -17,6 +17,9 @@ Including another URLconf
 
 from django.urls import path
 
+# This import ensures that drf-spectacular registers the Keycloak authentication scheme when the module is loaded
+import django_drf_keycloak_auth.schema
+
 from . import views
 
 urlpatterns = [

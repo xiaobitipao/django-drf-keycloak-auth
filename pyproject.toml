@@ -31,6 +31,7 @@ dependencies = [
     "python-keycloak>=5.8.1",
     "pydantic>=2.12.2",
     "pydantic-settings>=2.11.0",
+    "drf-spectacular>=0.28.0",
 ]
 urls = { "Homepage" = "https://github.com/xiaobitipao/django-drf-keycloak-auth" }
 dynamic = ["version"]

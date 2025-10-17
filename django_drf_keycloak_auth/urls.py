@@ -17,6 +17,8 @@ Including another URLconf
 
 from django.urls import path
 
+# Do not remove this import.
+#
 # This import ensures that drf-spectacular registers the Keycloak authentication scheme when the module is loaded
 import django_drf_keycloak_auth.schema
 
@@ -26,6 +28,7 @@ urlpatterns = [
     path("oauth2/login/", views.LoginView.as_view(), name="login"),
     path("oauth2/token/", views.GenerateTokenView.as_view(), name="login"),
     path("oauth2/refresh/", views.RefreshTokenView.as_view(), name="refresh_token"),
+    path("oauth2/revoke/", views.RevokeTokenView.as_view(), name="revoke_token"),
     path("oauth2/logout/", views.LogoutView.as_view(), name="logout"),
-    path("callback/", views.CallbackView.as_view(), name="callback"),
+    path("oauth2/callback/", views.CallbackView.as_view(), name="callback"),
 ]

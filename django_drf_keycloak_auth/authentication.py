@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
 from django.http import HttpRequest
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
 from django_drf_keycloak_auth.keycloak_utils import get_keycloak_openid
+from django_drf_keycloak_auth.models.user import User
 
 
 class KeycloakAuthentication(BaseAuthentication):
@@ -13,9 +13,13 @@ class KeycloakAuthentication(BaseAuthentication):
 
         # Get request header of [Authorization: Bearer <token>]
         auth: str = request.META.get("HTTP_AUTHORIZATION", "")
-        if not auth or not auth.startswith("Bearer "):
+        if not auth:
+            # If None is returned,
+            # it indicates that the authentication class has not authenticated the request.
+            # (DRF will continue to try other authentication classes or consider the request anonymous).
             return None
-            # raise AuthenticationFailed("Invalid Authorization header")
+        elif not auth.startswith("Bearer "):
+            raise AuthenticationFailed("Invalid token header. No credentials provided.")
 
         # Get access token from header
         access_token = auth.split(" ", 1)[1].strip()
@@ -33,12 +37,5 @@ class KeycloakAuthentication(BaseAuthentication):
         except Exception as e:
             raise AuthenticationFailed("Invalid access_token")
 
-        username = userinfo.get("preferred_username") or userinfo.get("sub")
-        if not username:
-            raise AuthenticationFailed("Unable to determine username from access_token")
-
-        user, _ = User.objects.get_or_create(
-            username=username,
-            defaults={"email": userinfo.get("email", "")},
-        )
-        return (user, None)
+        user = User(claims=userinfo)
+        return (user, access_token)

@@ -6,6 +6,10 @@ class LoginRequestSerializer(serializers.Serializer):
 
     redirect_uri = serializers.URLField(help_text="Redirect URI registered in Keycloak")
     nonce = serializers.CharField(help_text="Nonce for OpenID Connect")
+    state = serializers.CharField(help_text="State for OpenID Connect")
+    # code_challenge = serializers.CharField(
+    #     help_text="Code Challenge for OpenID Connect"
+    # )
 
 
 class RefreshTokenRequestSerializer(serializers.Serializer):
@@ -61,10 +65,9 @@ class UserInfoSerializer(serializers.Serializer):
 class GenerateTokenRequestSerializer(serializers.Serializer):
     """Generate Token: by Authorization Code"""
 
-    code = serializers.CharField(help_text="Authorization code from Keycloak")
-    state = serializers.CharField(help_text="State parameter")
-    nonce = serializers.CharField(help_text="Nonce parameter")
     redirect_uri = serializers.URLField(help_text="Redirect URI registered in Keycloak")
+    code = serializers.CharField(help_text="Authorization code from Keycloak")
+    # code_verifier = serializers.CharField(help_text="Code Verifier")
 
 
 class GenerateTokenResponseSerializer(serializers.Serializer):

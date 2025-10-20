@@ -14,7 +14,23 @@ uv add django-drf-keycloak-auth
 
 ## Usage
 
+1. Add `django-drf-keycloak-auth` to `requirements.txt`
+
+    ```bash
+    django-drf-keycloak-auth==0.1.0
+    ```
+
+    > You need to create your own `nonce` and `state` on the client side and then pass that `nonce` and `state` along with the `redirect_uri` to the server side. `code` and `state` are returned after successful authentication. You need to use the `code` to obtain token information.
+
+2. Set environment variables
+
+    Refer to the `.env.template` in [django-drf-keycloak-auth-example-back-end](https://github.com/xiaobitipao/django-drf-keycloak-auth-example-back-end).
+
 ## Examples
+
+There is a full example in the [django-drf-keycloak-auth-example-front-end](https://github.com/xiaobitipao/django-drf-keycloak-auth-example-front-end) and [django-drf-keycloak-auth-example-back-end](https://github.com/xiaobitipao/django-drf-keycloak-auth-example-back-end) that can be run directly.
+
+You can start from the example to learn how to use `django-drf-keycloak-auth`.
 
 ## Deploy project(memo for developer)
 
